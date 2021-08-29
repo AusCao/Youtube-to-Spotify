@@ -1,4 +1,4 @@
-# YoutubeToSpotify
+# Youtube-to-Spotify
 Imports a Youtube playlist to Spotify. (Only songs that are available on Spotify) <br />
 DEMO: <br />
 https://www.youtube.com/watch?v=VE2kmldeuBQ <br />

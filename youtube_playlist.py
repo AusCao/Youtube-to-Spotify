@@ -23,6 +23,26 @@ class YoutubePlaylist:
                                                id=self.playlistID)
         response = request.execute()
         self.playlistName = response["items"][0]["snippet"]["title"]
+    
+    def __getTitle(self, title):
+        index1 = title.find('(')
+        index2 = title.rfind(')')
+        if (index1 != -1 and index2 != -1):
+            title = title[0 : index1 : ] + title[index2 + 1 : :]
+        index1 = title.find('[')
+        index2 = title.find(']')
+        if (index1 != -1 and index2 != -1):
+            title = title[0 : index1 : ] + title[index2 + 1 : :]
+        index1 = title.find("ft.")
+        if (index1 != -1):
+            title = title[0 : index1 : ] + title[index1 + 3 : :]
+        index1 = title.find("-")
+        if (index1 != -1):
+            title = title[0 : index1 : ] + title[index1 + 1 : :]
+        index1 = title.find("feat.")
+        if (index1 != -1):
+            title = title[0 : index1 : ] + title[index1 + 5 : :]
+        return title
 
     def __getPlaylist(self):
         request = self.youtube.playlistItems().list(part="snippet,contentDetails",
@@ -32,17 +52,7 @@ class YoutubePlaylist:
         while (response != None):
             for item in response["items"]:
                 title = item["snippet"]["title"]
-                index1 = title.find('(')
-                index2 = title.rfind(')')
-                if (index1 != -1 and index2 != -1):
-                    title = title[0 : index1 : ] + title[index2 + 1 : :]
-                index1 = title.find('[')
-                index2 = title.find(']')
-                if (index1 != -1 and index2 != -1):
-                    title = title[0 : index1 : ] + title[index2 + 1 : :]
-                index1 = title.find("ft.")
-                if (index1 != -1):
-                    title = title[0 : index1 : ]
+                title = self.__getTitle(title)
                 self.playlist.append(title)
             if ("nextPageToken" in response):
                 request = self.youtube.playlistItems().list(part="snippet,contentDetails",

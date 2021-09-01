@@ -27,4 +27,3 @@ class SpotifyPlaylist:
             if (len(result["tracks"]["items"]) >  0):
                 songURI = [result["tracks"]["items"][0]["uri"]]
                 self.sp.playlist_add_items(playlistID, songURI)
-

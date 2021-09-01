@@ -16,7 +16,6 @@ class YoutubePlaylist:
         self.playlist = []
         self.__getPlaylistName()
         self.__getPlaylist()
-        
 
     def __getPlaylistName(self):
         request = self.youtube.playlists().list(part="snippet,contentDetails",
@@ -56,9 +55,9 @@ class YoutubePlaylist:
                 self.playlist.append(title)
             if ("nextPageToken" in response):
                 request = self.youtube.playlistItems().list(part="snippet,contentDetails",
-                                            playlistId=self.playlistID,
-                                            maxResults=25,
-                                            pageToken=response["nextPageToken"])
+                                                            playlistId=self.playlistID,
+                                                            maxResults=25,
+                                                            pageToken=response["nextPageToken"])
                 response = request.execute()
             else:
                 response = None
@@ -71,12 +70,3 @@ class YoutubePlaylist:
     
     def __del__(self):
         self.youtube.close()
-
-
-
-
-    
-
-
-    
-        
